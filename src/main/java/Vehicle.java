@@ -55,8 +55,8 @@ public class Vehicle {
 
     public int computeDeltaV() {
         // return velocity + gravity - burn amount
-        int deltaV =  Velocity + Gravity - Burn;
-        return deltaV;
+        return Velocity + Gravity - Burn;
+
     }
 
     public void adjustForBurn(int burnAmount) {
