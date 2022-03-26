@@ -2,6 +2,8 @@ public class Vehicle {
 
     public Vehicle(int InitialAltitude) {
         // initialize the altitude AND previous altitude to initialAltitude
+        this.Altitude = InitialAltitude;
+        this.PrevAltitude = InitialAltitude;
     }
 
     int Gravity = 100;
@@ -11,7 +13,7 @@ public class Vehicle {
     String dead = "\nCRASH!!\n\tThere were no survivors.\n\n";
     public static final int DEAD = -3;
     String crashed = "\nThe Starship crashed. Good luck getting back home. Elon is pissed.\n\n";
-    public static final int CRASHED = -2;
+    public static final int CRASHED = -2; //for runSimulationCrash. Early fail.
     String emptyfuel = "\nThere is no fuel left. You're floating around like Major Tom.\n\n";
     public static final int EMPTYFUEL = -1;
     String success = "\nYou made it! Good job!\n\n";
@@ -21,7 +23,6 @@ public class Vehicle {
     // this is initial vehicle setup
     int Altitude= 8000;
     int PrevAltitude= 8000;
-
     int Velocity= 1000;
     int Fuel = 12000;
     int Burn = 0;
@@ -54,7 +55,8 @@ public class Vehicle {
 
     public int computeDeltaV() {
         // return velocity + gravity - burn amount
-        return 0;
+        int deltaV =  Velocity + Gravity - Burn;
+        return deltaV;
     }
 
     public void adjustForBurn(int burnAmount) {
@@ -64,6 +66,10 @@ public class Vehicle {
         // subtract speed from Altitude
         // subtract burn amount fuel used from tank
         burnAmount = Burn;
+        PrevAltitude = Altitude;
+        Velocity = computeDeltaV();
+        Altitude -= Velocity;
+        Fuel -= burnAmount;
 
     }
 
@@ -85,7 +91,7 @@ public class Vehicle {
     public DescentEvent getStatus(int tick) {
         // create a return a new DescentEvent object
         // filled in with the state of the vehicle.
-        return new DescentEvent(getStatus());
+        return new DescentEvent(tick,Velocity, Fuel,Altitude, Flying);
     }
 
 }
