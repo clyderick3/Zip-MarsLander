@@ -63,21 +63,29 @@ public class Vehicle {
         // set new velocity to result of computeDeltaV function.
         // subtract speed from Altitude
         // subtract burn amount fuel used from tank
+        burnAmount = Burn;
+
     }
 
     public boolean stillFlying() {
+        if (Altitude > 0){
+            return true;
+        }
         // return true if altitude is positive
         return false;
     }
     public boolean outOfFuel() {
-        // return true if fuel is less than or equal to zero
-        return true;
+        if (Fuel <= 0) {
+            // return true if fuel is less than or equal to zero
+            return true;
+        }
+        return false;
     }
 
     public DescentEvent getStatus(int tick) {
         // create a return a new DescentEvent object
         // filled in with the state of the vehicle.
-        return null;
+        return new DescentEvent(getStatus());
     }
 
 }
